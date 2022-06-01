@@ -258,7 +258,7 @@ splitConstrainedType ty =
 
 -- CoArbitrary instances.
 instance CoArbitrary Type where
-  coarbitrary = coarbitrary . singleton
+  coarbitrary = coarbitrary . Twee.Base.singleton
 instance CoArbitrary (TermList TyCon) where
   coarbitrary Empty = variant 0
   coarbitrary ConsSym{hd = Var (V x), rest = ts} =
@@ -299,7 +299,7 @@ typeSubst s x = typeSubst_ (evalSubst s) x
 newtype TypeView a = TypeView { unTypeView :: a }
 instance Typed a => Symbolic (TypeView a) where
   type ConstantOf (TypeView a) = TyCon
-  termsDL = fmap singleton . typesDL . unTypeView
+  termsDL = fmap Twee.Base.singleton . typesDL . unTypeView
   subst_ sub = TypeView . typeSubst_ sub . unTypeView
 instance Typed a => Has (TypeView a) Type where
   the = typ . unTypeView
